@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: posts
+          uri: http://localhost:18081
+          predicates:
+            - Path=/posts/**
+        - id: user
+          uri: http://localhost:18082
+          predicates:
+            - Path=/user/**
