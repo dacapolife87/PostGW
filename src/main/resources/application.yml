@@ -1,9 +1,15 @@
 spring:
+  application:
+    name: app-gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: false
       routes:
         - id: posts
-          uri: http://localhost:18081
+#          uri: http://localhost:18081
+          uri: lb://post-service
           predicates:
             - Path=/posts/**
 #          filters:
@@ -16,3 +22,19 @@ spring:
           uri: http://localhost:18082
           predicates:
             - Path=/user/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "gateway"
+  endpoint:
+    gateway:
+      enabled: true
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.0.215:8880/eureka/
