@@ -12,7 +12,19 @@ spring:
           uri: lb://post-service
           predicates:
             - Path=/posts/**
-#          filters:
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback
+        - id: posts-fallback
+          uri: http://www.naver.com
+          predicates:
+            - Path=/fallback
+          filters:
+            - RewritePath=/fallback/(?<path>.*),/$\{path}
+
+        #          filters:
 #            - name: GlobalFilter
 #              args:
 #                baseMessage: Spring Cloud Gateway PostsFilter
@@ -38,3 +50,7 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://192.168.0.215:8880/eureka/
+
+logging:
+  level:
+    root: debug
