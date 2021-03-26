@@ -8,7 +8,6 @@ spring:
           enabled: false
       routes:
         - id: posts
-#          uri: http://localhost:18081
           uri: lb://post-service
           predicates:
             - Path=/posts/**
@@ -18,11 +17,9 @@ spring:
                 name: myCircuitBreaker
                 fallbackUri: forward:/fallback
         - id: posts-fallback
-          uri: http://www.naver.com
+          uri: http://192.168.0.177:14080/
           predicates:
             - Path=/fallback
-          filters:
-            - RewritePath=/fallback/(?<path>.*),/$\{path}
 
         #          filters:
 #            - name: GlobalFilter
