@@ -48,6 +48,6 @@ eureka:
     service-url:
       defaultZone: http://192.168.0.215:8880/eureka/
 
-logging:
-  level:
-    root: debug
+#logging:
+#  level:
+#    root: debug
